@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public abstract class ShipParts : MonoBehaviour
 {
@@ -238,6 +239,4 @@ public abstract class ShipParts : MonoBehaviour
         if (RecentlyDamaged)
             RecentlyDamaged = false;
     }
-
-
 }

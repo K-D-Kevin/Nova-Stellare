@@ -49,6 +49,20 @@ public class GarageSlot : MonoBehaviour
             Parent = value;
         }
     }
+    // Ship in Garage
+    [SerializeField]
+    private PlayerShip GarageShip;
+    public PlayerShip GetGarageShip
+    {
+        get
+        {
+            return GarageShip;
+        }
+        set
+        {
+            GarageShip = value;
+        }
+    }
     [SerializeField]
     private GameObject NextPage;
     

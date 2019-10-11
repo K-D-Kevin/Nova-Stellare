@@ -41,3 +41,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: EnemyParts
+    uniqueID: 199605103
+    locked: 0
+  - name: EnemyWeapons
+    uniqueID: 756508517
+    locked: 0
+  - name: PlayerParts
+    uniqueID: 4167893047
+    locked: 0
+  - name: PlayerWeapons
+    uniqueID: 49768183
+    locked: 0
+  - name: EnemyFire
+    uniqueID: 485096575
+    locked: 0
+  - name: PlayerFire
+    uniqueID: 350062851
+    locked: 0

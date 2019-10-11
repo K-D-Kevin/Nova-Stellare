@@ -3891,6 +3891,12 @@ PrefabInstance:
       propertyPath: ShipName
       value: Default
       objectReference: {fileID: 0}
+    - target: {fileID: 7283999921061942655, guid: 27c95d25c5e55034a80b37b980c25239,
+        type: 3}
+      propertyPath: GarageShip
+      value: 
+      objectReference: {fileID: 3256755399568414277, guid: 4bb82b8ccffe15848b1b05f084475a03,
+        type: 3}
     - target: {fileID: 7283999921061942631, guid: 27c95d25c5e55034a80b37b980c25239,
         type: 3}
       propertyPath: m_LocalPosition.x
