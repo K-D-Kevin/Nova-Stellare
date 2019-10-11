@@ -1321,7 +1321,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 648, y: 104}
+  m_SizeDelta: {x: 593, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &116175834
 MonoBehaviour:
@@ -1356,7 +1356,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Space Shooter
+  m_Text: Nova Stellare
 --- !u!222 &116175835
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1662,8 +1662,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -537, y: -475}
-  m_SizeDelta: {x: 626, y: 134}
+  m_AnchoredPosition: {x: -549.5, y: -475}
+  m_SizeDelta: {x: 601, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &132810452
 MonoBehaviour:
@@ -1677,7 +1677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1719fac43c044241ab1a50e380026bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EdgePixelSize: {x: 30, y: 30}
+  EdgePixelSize: {x: 5, y: 5}
   TitleBufferSize: {x: 100, y: 10}
   Center: 60
   CenterAt: 0
@@ -1723,8 +1723,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -680.5, y: 35}
-  m_SizeDelta: {x: 339, y: 134}
+  m_AnchoredPosition: {x: -693, y: 35}
+  m_SizeDelta: {x: 314, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &147872951
 MonoBehaviour:
@@ -1738,7 +1738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1719fac43c044241ab1a50e380026bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EdgePixelSize: {x: 30, y: 30}
+  EdgePixelSize: {x: 5, y: 5}
   TitleBufferSize: {x: 100, y: 10}
   Center: 60
   CenterAt: 0
@@ -1783,7 +1783,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 626, y: 134}
+  m_SizeDelta: {x: 601, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &157310558
 MonoBehaviour:
@@ -2157,7 +2157,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 303, y: 134}
+  m_SizeDelta: {x: 278, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &179899583
 MonoBehaviour:
@@ -2553,6 +2553,11 @@ PrefabInstance:
       propertyPath: DisplayStr
       value: Back
       objectReference: {fileID: 0}
+    - target: {fileID: 4536914069340110774, guid: 1494eb781c971534782b4fbc91f69d0a,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1494eb781c971534782b4fbc91f69d0a, type: 3}
 --- !u!224 &192082358 stripped
@@ -3137,7 +3142,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 678, y: 134}
+  m_SizeDelta: {x: 598, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &239487462
 MonoBehaviour:
@@ -3247,8 +3252,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -698.5, y: 205}
-  m_SizeDelta: {x: 303, y: 134}
+  m_AnchoredPosition: {x: -711, y: 205}
+  m_SizeDelta: {x: 278, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &292002119
 MonoBehaviour:
@@ -3262,7 +3267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1719fac43c044241ab1a50e380026bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EdgePixelSize: {x: 30, y: 30}
+  EdgePixelSize: {x: 5, y: 5}
   TitleBufferSize: {x: 100, y: 10}
   Center: 60
   CenterAt: 0
@@ -4187,7 +4192,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 339, y: 134}
+  m_SizeDelta: {x: 314, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &416496094
 MonoBehaviour:
@@ -4509,6 +4514,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4536914069340110774, guid: 1494eb781c971534782b4fbc91f69d0a,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1494eb781c971534782b4fbc91f69d0a, type: 3}
 --- !u!224 &417017003 stripped
@@ -5065,7 +5075,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -5678,6 +5688,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4536914069340110774, guid: 1494eb781c971534782b4fbc91f69d0a,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1494eb781c971534782b4fbc91f69d0a, type: 3}
 --- !u!224 &489747571 stripped
@@ -6420,7 +6435,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 303, y: 134}
+  m_SizeDelta: {x: 278, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &578347073
 MonoBehaviour:
@@ -6593,7 +6608,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -7216,6 +7231,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4536914069340110774, guid: 1494eb781c971534782b4fbc91f69d0a,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1494eb781c971534782b4fbc91f69d0a, type: 3}
 --- !u!224 &639648600 stripped
@@ -8245,8 +8265,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -640, y: -135}
-  m_SizeDelta: {x: 420, y: 134}
+  m_AnchoredPosition: {x: -652.5, y: -135}
+  m_SizeDelta: {x: 395, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &755481127
 MonoBehaviour:
@@ -8260,7 +8280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1719fac43c044241ab1a50e380026bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EdgePixelSize: {x: 30, y: 30}
+  EdgePixelSize: {x: 5, y: 5}
   TitleBufferSize: {x: 100, y: 10}
   Center: 60
   CenterAt: 0
@@ -8326,7 +8346,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -8633,7 +8653,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 461, y: 134}
+  m_SizeDelta: {x: 436, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &787311582
 MonoBehaviour:
@@ -8799,7 +8819,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 461, y: 134}
+  m_SizeDelta: {x: 436, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &835964160
 MonoBehaviour:
@@ -9348,8 +9368,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -511, y: 370}
-  m_SizeDelta: {x: 678, y: 134}
+  m_AnchoredPosition: {x: -551, y: 370}
+  m_SizeDelta: {x: 598, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &909255574
 MonoBehaviour:
@@ -9363,12 +9383,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1719fac43c044241ab1a50e380026bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EdgePixelSize: {x: 30, y: 30}
+  EdgePixelSize: {x: 5, y: 5}
   TitleBufferSize: {x: 60, y: 10}
   Center: 60
   CenterAt: 0
   DisplayText: {fileID: 116175834}
-  DisplayStr: Space Shooter
+  DisplayStr: Nova Stellare
   DisplayButton: {fileID: 1400246738}
   DisplayButtonActive: 0
   DisplayButtonInteractable: 1
@@ -10279,6 +10299,11 @@ PrefabInstance:
       propertyPath: DisplayStr
       value: Back
       objectReference: {fileID: 0}
+    - target: {fileID: 4536914069340110774, guid: 1494eb781c971534782b4fbc91f69d0a,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1494eb781c971534782b4fbc91f69d0a, type: 3}
 --- !u!224 &1052582390 stripped
@@ -10957,7 +10982,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 626, y: 134}
+  m_SizeDelta: {x: 601, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1161701865
 MonoBehaviour:
@@ -11031,8 +11056,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -619.5, y: -305}
-  m_SizeDelta: {x: 461, y: 134}
+  m_AnchoredPosition: {x: -632, y: -305}
+  m_SizeDelta: {x: 436, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1170908511
 MonoBehaviour:
@@ -11046,7 +11071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1719fac43c044241ab1a50e380026bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EdgePixelSize: {x: 30, y: 30}
+  EdgePixelSize: {x: 5, y: 5}
   TitleBufferSize: {x: 100, y: 10}
   Center: 60
   CenterAt: 0
@@ -11736,7 +11761,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -12863,7 +12888,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 420, y: 134}
+  m_SizeDelta: {x: 395, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1368967687
 MonoBehaviour:
@@ -13015,7 +13040,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 678, y: 134}
+  m_SizeDelta: {x: 598, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1400246738
 MonoBehaviour:
@@ -13955,6 +13980,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4536914069340110774, guid: 1494eb781c971534782b4fbc91f69d0a,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1494eb781c971534782b4fbc91f69d0a, type: 3}
 --- !u!224 &1480433949 stripped
@@ -14900,7 +14930,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -15602,7 +15632,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 420, y: 134}
+  m_SizeDelta: {x: 395, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1651318572
 MonoBehaviour:
@@ -16863,7 +16893,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 339, y: 134}
+  m_SizeDelta: {x: 314, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1869715170
 MonoBehaviour:
@@ -18058,7 +18088,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 648, y: 104}
+  m_SizeDelta: {x: 593, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2119466486
 MonoBehaviour:
@@ -18553,7 +18583,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -21433,7 +21463,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -22346,7 +22376,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -22503,7 +22533,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: e5c8eb40aa6fc8747b1b92e47f001bd5, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
