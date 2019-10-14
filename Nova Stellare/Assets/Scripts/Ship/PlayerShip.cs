@@ -118,9 +118,16 @@ public class PlayerShip : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if (Application.isEditor)
+        {
+            MouseInput();
+        }
+        else
+        {
+            TouchInput();
+        }
     }
 
     public void FireWeapons(Weapon.TypeOfFire Mode)
@@ -204,6 +211,78 @@ public class PlayerShip : MonoBehaviour
             {
                 ContactWeapons.Add(weap);
             }
+        }
+    }
+
+    private void TouchInput()
+    {
+        if (Input.touchCount > 0)
+        {
+
+            Vector2 Location = Input.GetTouch(0).position;
+            // OnDown
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                FindObjectOfType<InBuildDebugger>().SendDebugMessege("Touch Began");
+                if (OnDownWeapons.Count > 0)
+                    FireWeapons(Weapon.TypeOfFire.OnDown);
+            }
+            // Hold
+            else if (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved)
+            {
+                FindObjectOfType<InBuildDebugger>().SendDebugMessege("Touch Hold");
+                if (HoldWeapons.Count > 0)
+                    FireWeapons(Weapon.TypeOfFire.Hold);
+            }
+            // On Up
+            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                FindObjectOfType<InBuildDebugger>().SendDebugMessege("Ended");
+                if (OnUpWeapons.Count > 0)
+                    FireWeapons(Weapon.TypeOfFire.OnUp);
+            }
+        }
+        // When not touching
+        else
+        {
+            if (NoTouchWeapons.Count > 0)
+                FireWeapons(Weapon.TypeOfFire.NoTouch);
+        }
+    }
+
+    private void DecideTouchDecision(int touch)
+    {
+
+    }
+    private void MouseInput()
+    {
+        // Right Mouse Buttons
+        // OnDown
+        if (Input.GetMouseButtonDown(1))
+        {
+            FindObjectOfType<InBuildDebugger>().SendDebugMessege("Touch Began");
+            if (OnDownWeapons.Count > 0)
+                FireWeapons(Weapon.TypeOfFire.OnDown);
+        }
+        // Hold
+        else if (Input.GetMouseButton(1))
+        {
+            FindObjectOfType<InBuildDebugger>().SendDebugMessege("Touch Hold");
+            if (HoldWeapons.Count > 0)
+                FireWeapons(Weapon.TypeOfFire.Hold);
+        }
+        // On Up
+        else if (Input.GetMouseButtonUp(1))
+        {
+            FindObjectOfType<InBuildDebugger>().SendDebugMessege("Ended");
+            if (OnUpWeapons.Count > 0)
+                FireWeapons(Weapon.TypeOfFire.OnUp);
+        }
+        // When not touching
+        else
+        {
+            if (NoTouchWeapons.Count > 0)
+                FireWeapons(Weapon.TypeOfFire.NoTouch);
         }
     }
 }
