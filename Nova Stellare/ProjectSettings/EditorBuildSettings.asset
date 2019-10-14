@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/ShipTest.unity
-    guid: f0973eca1dfcb4b4b92f961f958cc19b
-  - enabled: 1
     path: Assets/Scenes/BuildShip.unity
     guid: 6db61fd5bd7e7de44adc2c8dab936cd6
+  - enabled: 1
+    path: Assets/Scenes/ShipTest.unity
+    guid: f0973eca1dfcb4b4b92f961f958cc19b
   m_configObjects: {}

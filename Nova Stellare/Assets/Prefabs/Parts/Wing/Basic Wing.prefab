@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60aedcf8c84ccb4488cb025de0a0e0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConnectionPart: {fileID: 6330464171746465222}
+  ConnectionPart: {fileID: 1057726652636069948}
   AdjacentPart: {fileID: 0}
   AdjacentPartConnection: {fileID: 0}
   X_Offset: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60aedcf8c84ccb4488cb025de0a0e0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConnectionPart: {fileID: 6330464171746465222}
+  ConnectionPart: {fileID: 1057726652636069948}
   AdjacentPart: {fileID: 0}
   AdjacentPartConnection: {fileID: 0}
   X_Offset: -0.162
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 6330464171746465219}
   - component: {fileID: 6330464171746465216}
   - component: {fileID: 6330464171746465217}
-  - component: {fileID: 6330464171746465222}
+  - component: {fileID: 1057726652636069948}
   m_Layer: 0
   m_Name: Basic Wing
   m_TagString: Untagged
@@ -243,7 +243,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
---- !u!114 &6330464171746465222
+--- !u!114 &1057726652636069948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6330464171746465218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65f4cedd080a8074bb1d0f35ab5b0ab9, type: 3}
+  m_Script: {fileID: 11500000, guid: dfe0aacf5cf079e4f8cf22bb6ae95ab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   HealthOfPart: 1
@@ -266,15 +266,16 @@ MonoBehaviour:
   DamageResistanceFromPlasma: 1
   DamageResistanceFromLasers: 1
   DamageResistanceFromExplosives: 1
-  ConnectionSpots: 5
+  ConnectionSpots: 3
   PartConnectionList:
-  - {fileID: 6330464171033936565}
   - {fileID: 6330464171239843753}
   - {fileID: 6330464172307497701}
+  - {fileID: 6330464171033936565}
   PrimaryColor: {r: 0, g: 0, b: 0, a: 0}
   SecondaryColor: {r: 0, g: 0, b: 0, a: 0}
   TertiaryColor: {r: 0, g: 0, b: 0, a: 0}
-  SpeedReduction: 0
+  SpeedIncrease: 1
+  AgilityIncrease: 1
 --- !u!1 &6330464172307497703
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60aedcf8c84ccb4488cb025de0a0e0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConnectionPart: {fileID: 6330464171746465222}
+  ConnectionPart: {fileID: 1057726652636069948}
   AdjacentPart: {fileID: 0}
   AdjacentPartConnection: {fileID: 0}
   X_Offset: 0

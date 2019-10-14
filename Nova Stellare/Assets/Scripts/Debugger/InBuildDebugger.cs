@@ -10,7 +10,7 @@ public class InBuildDebugger : MonoBehaviour
 
     public void SendDebugMessege(string Debug)
     {
-        ConsoleDisplay.SetDisplay(Debug, 10, 20);
+        ConsoleDisplay.SetDisplay(Debug, 10, 50);
         ConsoleDisplay.UpdateTextDisplay();
     }
 }

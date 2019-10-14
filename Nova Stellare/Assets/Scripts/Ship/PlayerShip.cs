@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerShip : MonoBehaviour
 {
@@ -99,6 +100,7 @@ public class PlayerShip : MonoBehaviour
             return NoTouchWeapons;
         }
     }
+    private bool NoTouchesRight = true;
     // Contact Weapons
     private List<Weapon> ContactWeapons = new List<Weapon>();
     public List<Weapon> ContactWeaponList
@@ -108,13 +110,70 @@ public class PlayerShip : MonoBehaviour
             return ContactWeapons;
         }
     }
+    // Ship transform
+    private Transform Mytransform;
+
+    // Touch detection and control detection
+    [SerializeField]
+    private GraphicRaycaster JoystickHitRaycastor;
+    private PointerEventData JoystickEventData;
+    private EventSystem SceneEventSystem;
+    private Vector2 ScreenLocation;
+    public Vector2 TouchScreenLocation { get { return ScreenLocation; } }
+
+    private Vector2 WorldLocation;
+    public Vector2 TouchWorldLocation { get { return WorldLocation; } }
+        // Controls
+    [SerializeField]
+    private JoyscriptControl Controller;
+        // Mouse Fire
+    private bool MouseFireStartedOnRight = false;
+    private List<FingerAndStart> TouchFireStartedOnRight = new List<FingerAndStart>();
+        // A way to keep if the finger started on the right or not
+    public struct FingerAndStart
+    {
+        public Touch FingerTouch;
+        public bool StartedRight;
+
+        public void Set(Touch id, bool startedRight)
+        {
+            FingerTouch = id;
+            StartedRight = startedRight;
+        }
+
+        public bool Contains(Touch touch)
+        {
+            return touch.fingerId == FingerTouch.fingerId;
+        }
+    }
+
+    // Ship Mobility
+    [SerializeField]
+    private float AccelerationFactor = 10;
+    [SerializeField]
+    private float DeaccelerationRate = 5;
+    private int BaseSpeed = 0;
+    private int BaseAcceleration= 0;
+    private int BaseThrustRight = 0;
+    private int BaseThrustLeft = 0;
+    private int BaseThrustUp = 0;
+    private int BaseThrustDown = 0;
+    private int BaseAccelReduction = 0;
+    private float CurrentSpeedHorizontal = 0;
+    private float CurrentAccelerationHorizontal = 0;
+    private float CurrentSpeedVertical = 0;
+    private float CurrentAccelerationVertical = 0;
 
     // Start is called before the first frame update
     public void Start()
     {
+        Mytransform = GetComponent<Transform>();
         Parts = GetComponentsInChildren<ShipParts>();
         // Set all the part lists
         SetVariables();
+
+        // Set Find Joystick Elements
+        SceneEventSystem = FindObjectOfType<EventSystem>();
     }
 
     // Update is called once per frame
@@ -128,8 +187,133 @@ public class PlayerShip : MonoBehaviour
         {
             TouchInput();
         }
+        ApplyMobility(Controller.GetMovementRatio());
     }
 
+    // Mobility
+    private void SetWingListStats()
+    {
+        foreach (Wing wing in WingParts)
+        {
+            BaseSpeed += wing.ShipSpeedIncrease;
+            BaseAcceleration += wing.ShipAgilityIncrease;
+        }
+    }
+    private void SetHullListStats()
+    {
+        foreach (Hull hull in HullParts)
+        {
+            BaseAccelReduction += hull.ShipSpeedReduction;
+        }
+    }
+    private void SetGunListStats()
+    {
+        foreach (Weapon weap in WeaponParts)
+        {
+            if (weap.transform.rotation.z == 0f)
+            {
+                BaseThrustLeft += weap.PartThrust;
+            }
+            else if (weap.transform.rotation.z == 90f)
+            {
+                BaseThrustDown += weap.PartThrust;
+            }
+            else if (weap.transform.rotation.z == 180f)
+            {
+                BaseThrustRight += weap.PartThrust;
+            }
+            else if (weap.transform.rotation.z == 270f)
+            {
+                BaseThrustUp += weap.PartThrust;
+            }
+        }
+    }
+    private void SetThrusterListStats()
+    {
+        foreach (Thruster thruster in ThrusterParts)
+        {
+            if (thruster.transform.rotation.z == 0f)
+            {
+                BaseThrustRight += thruster.PartThrust;
+            }
+            else if (thruster.transform.rotation.z == 90f)
+            {
+                BaseThrustUp += thruster.PartThrust;
+            }
+            else if (thruster.transform.rotation.z == 180f)
+            {
+                BaseThrustLeft += thruster.PartThrust;
+            }
+            else if (thruster.transform.rotation.z == 270f)
+            {
+                BaseThrustDown += thruster.PartThrust;
+            }
+        }
+    }
+    private void ApplyMobility(Vector2 DirectionRatio)
+    {
+        // Calculate
+        // Horizontal Movement
+        if (DirectionRatio.x > 0) // Right
+        {
+            //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Right");
+            if (CurrentSpeedHorizontal <= Mathf.Abs(BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) /(BaseAccelReduction + 1)))
+                CurrentAccelerationHorizontal = DirectionRatio.x * Time.fixedDeltaTime * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
+            else
+                CurrentAccelerationHorizontal = 0;
+        }
+        else if (DirectionRatio.x < 0) // Left
+        {
+            //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Left");
+            if (CurrentSpeedHorizontal <= Mathf.Abs(BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
+                CurrentAccelerationHorizontal = DirectionRatio.x * Time.fixedDeltaTime * BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
+            else
+                CurrentAccelerationHorizontal = 0;
+        }
+        else
+        {
+            if (Mathf.Abs(CurrentAccelerationHorizontal) > 0)
+                CurrentAccelerationHorizontal = -DeaccelerationRate * Time.fixedDeltaTime * CurrentSpeedHorizontal * (BaseAcceleration + 1) / (BaseAccelReduction + 1);
+            else
+                CurrentAccelerationHorizontal = 0;
+        }
+        // Vertical Movement
+        if (DirectionRatio.y > 0) // Up
+        {
+            //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Up");
+            if (CurrentSpeedVertical <= Mathf.Abs(BaseSpeed * (BaseThrustUp + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
+                CurrentAccelerationVertical = DirectionRatio.y * Time.fixedDeltaTime * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
+            else
+                CurrentAccelerationVertical = 0;
+        }
+        else if (DirectionRatio.y < 0) // Down
+        {
+            //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Down");
+            if (CurrentSpeedVertical <= Mathf.Abs(BaseSpeed * (BaseThrustDown + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
+                CurrentAccelerationVertical = DirectionRatio.y * Time.fixedDeltaTime * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
+            else
+                CurrentAccelerationVertical = 0;
+        }
+        else
+        {
+            if (Mathf.Abs(CurrentAccelerationVertical) > 0)
+                CurrentAccelerationVertical = -DeaccelerationRate * Time.fixedDeltaTime * CurrentSpeedVertical * (BaseAcceleration + 1) / (BaseAccelReduction + 1);
+            else
+                CurrentAccelerationVertical = 0;
+        }
+        FindObjectOfType<InBuildDebugger>().SendDebugMessege("Ratio: " + DirectionRatio);
+
+        // Adjust Speed
+        CurrentSpeedHorizontal += CurrentAccelerationHorizontal * Time.fixedDeltaTime;
+        CurrentSpeedVertical += CurrentAccelerationVertical * Time.fixedDeltaTime;
+        Vector3 Speed = new Vector3(CurrentSpeedHorizontal, CurrentSpeedVertical, 0);
+
+        // Apply Speeds
+        //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Velocity: " + Speed);
+        Mytransform.position += Speed;
+    }
+
+    // Weapons
     public void FireWeapons(Weapon.TypeOfFire Mode)
     {
         if (Mode == Weapon.TypeOfFire.Hold)
@@ -162,6 +346,7 @@ public class PlayerShip : MonoBehaviour
         }
     }
 
+    // Setting list of parts
     public void SetVariables()
     {
         // Set all the part lists
@@ -212,77 +397,231 @@ public class PlayerShip : MonoBehaviour
                 ContactWeapons.Add(weap);
             }
         }
+        // Set mobility variables
+        SetWingListStats();
+        SetHullListStats();
+        SetGunListStats();
+        SetThrusterListStats();
     }
 
+    // Touch and Control
+    private bool ContainsTouch(List<FingerAndStart> StructList, Touch touch)
+    {
+        bool Result = false;
+        foreach (FingerAndStart TouchStruct in StructList)
+        {
+            if (TouchStruct.Contains(touch))
+            {
+                Result = true;
+                break;
+            }
+        }
+
+        return Result;
+    }
+
+    // Make sure to check you got a valid Struct
+    private FingerAndStart GetTouchStruct(List<FingerAndStart> StructList, Touch touch)
+    {
+        FingerAndStart Result = new FingerAndStart();
+        foreach (FingerAndStart TouchStruct in StructList)
+        {
+            if (TouchStruct.Contains(touch))
+            {
+                Result = TouchStruct;
+                break;
+            }
+        }
+
+        return Result;
+    }
     private void TouchInput()
     {
         if (Input.touchCount > 0)
         {
-
-            Vector2 Location = Input.GetTouch(0).position;
-            // OnDown
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            NoTouchesRight = true;
+            foreach (Touch touch in Input.touches)
             {
-                FindObjectOfType<InBuildDebugger>().SendDebugMessege("Touch Began");
+                DecideTouchDecision(touch);
+            }
+            if (NoTouchesRight)
+            {
+                if (NoTouchWeapons.Count > 0)
+                    FireWeapons(Weapon.TypeOfFire.NoTouch);
+            }
+        }
+    }
+
+    private void DecideTouchDecision(Touch touch)
+    {
+        ScreenLocation = touch.position;
+        //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Touch Position: " + ScreenLocation);
+        Ray ray = Camera.main.ScreenPointToRay(ScreenLocation);
+        MouseFireStartedOnRight = false;
+        // Make sure its part of a valid struct
+        if (ContainsTouch(TouchFireStartedOnRight, touch))
+        {
+            MouseFireStartedOnRight = GetTouchStruct(TouchFireStartedOnRight, touch).StartedRight;
+        }
+
+
+        if (ScreenLocation.x >= Screen.width / 2 || MouseFireStartedOnRight)
+        {
+            NoTouchesRight = false;
+            // OnDown
+            if (touch.phase == TouchPhase.Began)
+            {
+                if (!ContainsTouch(TouchFireStartedOnRight, touch))
+                {
+                    FingerAndStart temp = new FingerAndStart();
+                    temp.Set(touch, true);
+                    TouchFireStartedOnRight.Add(temp);
+                }
+                //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Began");
                 if (OnDownWeapons.Count > 0)
                     FireWeapons(Weapon.TypeOfFire.OnDown);
             }
             // Hold
-            else if (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved)
+            else if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
             {
-                FindObjectOfType<InBuildDebugger>().SendDebugMessege("Touch Hold");
+                //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Hold");
                 if (HoldWeapons.Count > 0)
                     FireWeapons(Weapon.TypeOfFire.Hold);
             }
             // On Up
-            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            else if (touch.phase == TouchPhase.Ended)
             {
-                FindObjectOfType<InBuildDebugger>().SendDebugMessege("Ended");
+                // remove from list if it contains it
+                if (ContainsTouch(TouchFireStartedOnRight, touch))
+                {
+                    TouchFireStartedOnRight.Remove(GetTouchStruct(TouchFireStartedOnRight, touch));
+                }
+                //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Ended");
                 if (OnUpWeapons.Count > 0)
                     FireWeapons(Weapon.TypeOfFire.OnUp);
             }
         }
-        // When not touching
         else
         {
-            if (NoTouchWeapons.Count > 0)
-                FireWeapons(Weapon.TypeOfFire.NoTouch);
+            if (touch.phase == TouchPhase.Began)
+            {
+                FingerAndStart temp = new FingerAndStart();
+                temp.Set(touch, false);
+                TouchFireStartedOnRight.Add(temp);
+            }
         }
-    }
 
-    private void DecideTouchDecision(int touch)
-    {
+        // If player clicks on the joystick
+        if (touch.phase == TouchPhase.Began)
+        {
+            // Get Event data
+            JoystickEventData = new PointerEventData(SceneEventSystem);
+            JoystickEventData.position = new Vector3(ScreenLocation.x, ScreenLocation.y, 0);
+            List<RaycastResult> RaycastResults = new List<RaycastResult>();
+            JoystickHitRaycastor.Raycast(JoystickEventData, RaycastResults);
 
+            //If we found the joystick
+            if (UiFound(RaycastResults))
+            {
+                Controller.StartFollow(this);
+            }
+        }
+        else if (touch.phase == TouchPhase.Ended)
+        {
+            // remove from list if it contains it
+            if (ContainsTouch(TouchFireStartedOnRight, touch))
+            {
+                TouchFireStartedOnRight.Remove(GetTouchStruct(TouchFireStartedOnRight, touch));
+            }
+
+            // Reset this just ion case
+            MouseFireStartedOnRight = false;
+
+            // Let the controller no it can stop following
+            Controller.IsPressed = false;
+        }
     }
     private void MouseInput()
     {
-        // Right Mouse Buttons
-        // OnDown
-        if (Input.GetMouseButtonDown(1))
+        // Find mouse position
+        ScreenLocation = Input.mousePosition;
+
+        if (ScreenLocation.x >= Screen.width / 2.0f || MouseFireStartedOnRight)
         {
-            FindObjectOfType<InBuildDebugger>().SendDebugMessege("Touch Began");
-            if (OnDownWeapons.Count > 0)
-                FireWeapons(Weapon.TypeOfFire.OnDown);
+            // Right Mouse acts like a touch 
+            // OnDown
+            if (Input.GetMouseButtonDown(1))
+            {
+                MouseFireStartedOnRight = true;
+                //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Began");
+                if (OnDownWeapons.Count > 0)
+                    FireWeapons(Weapon.TypeOfFire.OnDown);
+            }
+            // Hold
+            else if (Input.GetMouseButton(1) && MouseFireStartedOnRight)
+            {
+                //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Hold");
+                if (HoldWeapons.Count > 0)
+                    FireWeapons(Weapon.TypeOfFire.Hold);
+            }
+            // On Up
+            else if (Input.GetMouseButtonUp(1) && MouseFireStartedOnRight)
+            {
+                MouseFireStartedOnRight = false;
+                //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Ended");
+                if (OnUpWeapons.Count > 0)
+                    FireWeapons(Weapon.TypeOfFire.OnUp);
+            }
+            // When not touching
+            else
+            {
+                if (NoTouchWeapons.Count > 0)
+                    FireWeapons(Weapon.TypeOfFire.NoTouch);
+            }
         }
-        // Hold
-        else if (Input.GetMouseButton(1))
-        {
-            FindObjectOfType<InBuildDebugger>().SendDebugMessege("Touch Hold");
-            if (HoldWeapons.Count > 0)
-                FireWeapons(Weapon.TypeOfFire.Hold);
-        }
-        // On Up
-        else if (Input.GetMouseButtonUp(1))
-        {
-            FindObjectOfType<InBuildDebugger>().SendDebugMessege("Ended");
-            if (OnUpWeapons.Count > 0)
-                FireWeapons(Weapon.TypeOfFire.OnUp);
-        }
-        // When not touching
         else
         {
+            // No touching the fire so ship fires no touch weapons
             if (NoTouchWeapons.Count > 0)
                 FireWeapons(Weapon.TypeOfFire.NoTouch);
         }
+
+        // If player clicks on the joystick
+        if (Input.GetMouseButtonDown(1))
+        {
+            // Get Event data
+            JoystickEventData = new PointerEventData(SceneEventSystem);
+            JoystickEventData.position = new Vector3(ScreenLocation.x, ScreenLocation.y, 0);
+            List<RaycastResult> RaycastResults = new List<RaycastResult>();
+            JoystickHitRaycastor.Raycast(JoystickEventData, RaycastResults);
+
+            //If we found the joystick
+            if (UiFound(RaycastResults))
+            {
+                Controller.StartFollow(this);
+            }
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            // Reset this just ion case
+            MouseFireStartedOnRight = false;
+
+            // Let the controller no it can stop following
+            Controller.IsPressed = false;
+        }
+    }
+
+    private bool UiFound(List<RaycastResult> results)
+    {
+        bool found = false;
+        foreach (RaycastResult result in results)
+        {
+            if(result.gameObject.tag == "LeftJoystick")
+            {
+                found = true;
+                break;
+            }
+        }
+        return found;
     }
 }
