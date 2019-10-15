@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 24.4}
-  m_SizeDelta: {x: 105, y: 49.42}
+  m_SizeDelta: {x: 105, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1502841097403259798
 CanvasRenderer:
@@ -453,7 +453,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 62.5, y: -1017.5}
+  m_AnchoredPosition: {x: 62.5, y: 62.5}
   m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1502841099151595450
@@ -478,3 +478,4 @@ MonoBehaviour:
   DisplayButton: {fileID: 1502841098210334843}
   DisplayButtonActive: 1
   DisplayButtonInteractable: 1
+  UseCenter: 1

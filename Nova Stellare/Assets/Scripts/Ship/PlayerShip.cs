@@ -120,6 +120,9 @@ public class PlayerShip : MonoBehaviour
     private EventSystem SceneEventSystem;
     private Vector2 ScreenLocation;
     public Vector2 TouchScreenLocation { get { return ScreenLocation; } }
+    private int FingerIdFollow = -1; // -1 means no finger is getting followed
+    private Vector2 ScreenLocationJoystick;
+    public Vector2 TouchJoystickLocation { get { return ScreenLocationJoystick; } }
 
     private Vector2 WorldLocation;
     public Vector2 TouchWorldLocation { get { return WorldLocation; } }
@@ -511,9 +514,17 @@ public class PlayerShip : MonoBehaviour
             }
         }
 
-        // If player clicks on the joystick
-        if (touch.phase == TouchPhase.Began)
+        // Update joystick touch parameters
+        if (touch.fingerId == FingerIdFollow)
         {
+            ScreenLocationJoystick = touch.position;
+        }
+
+        // If player clicks on the joystick
+        if (touch.phase == TouchPhase.Began && !Controller.IsPressed && ScreenLocation.x < Screen.width / 2)
+        {
+            FingerIdFollow = touch.fingerId;
+            ScreenLocationJoystick = touch.position;
             // Get Event data
             JoystickEventData = new PointerEventData(SceneEventSystem);
             JoystickEventData.position = new Vector3(ScreenLocation.x, ScreenLocation.y, 0);
@@ -526,8 +537,9 @@ public class PlayerShip : MonoBehaviour
                 Controller.StartFollow(this);
             }
         }
-        else if (touch.phase == TouchPhase.Ended)
+        else if (touch.phase == TouchPhase.Ended && touch.fingerId == FingerIdFollow)
         {
+            FingerIdFollow = -1;
             // remove from list if it contains it
             if (ContainsTouch(TouchFireStartedOnRight, touch))
             {
@@ -545,6 +557,7 @@ public class PlayerShip : MonoBehaviour
     {
         // Find mouse position
         ScreenLocation = Input.mousePosition;
+        ScreenLocationJoystick = ScreenLocation;
 
         if (ScreenLocation.x >= Screen.width / 2.0f || MouseFireStartedOnRight)
         {
@@ -577,6 +590,30 @@ public class PlayerShip : MonoBehaviour
             {
                 if (NoTouchWeapons.Count > 0)
                     FireWeapons(Weapon.TypeOfFire.NoTouch);
+            }
+        }
+        // Adds another touch to test fireing and moving
+        else if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Began");
+                if (OnDownWeapons.Count > 0)
+                    FireWeapons(Weapon.TypeOfFire.OnDown);
+            }
+            // Hold
+            else if (Input.GetMouseButton(0))
+            {
+                //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Hold");
+                if (HoldWeapons.Count > 0)
+                    FireWeapons(Weapon.TypeOfFire.Hold);
+            }
+            // On Up
+            else if (Input.GetMouseButtonUp(0))
+            {
+                //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Ended");
+                if (OnUpWeapons.Count > 0)
+                    FireWeapons(Weapon.TypeOfFire.OnUp);
             }
         }
         else

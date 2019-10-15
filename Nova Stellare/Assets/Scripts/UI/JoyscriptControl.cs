@@ -49,7 +49,7 @@ public class JoyscriptControl : MonoBehaviour
         {
             Vector2 ScreenPoint = Camera.main.WorldToScreenPoint(MyTransform.position);
             //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Touch Position Joystick / Mouse: " + ScreenPoint + " / " + ship.TouchScreenLocation + ", Position: " + MyTransform.position);
-            Vector2 TouchJoystickDirection = ship.TouchScreenLocation - ScreenPoint;
+            Vector2 TouchJoystickDirection = ship.TouchJoystickLocation - ScreenPoint;
 
             MyTransform.Translate(TouchJoystickDirection * Time.deltaTime);
             JoystickDisplacement = MyTransform.position - CenterTransform.position;
