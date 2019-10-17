@@ -239,4 +239,83 @@ public abstract class ShipParts : MonoBehaviour
         if (RecentlyDamaged)
             RecentlyDamaged = false;
     }
+
+    protected void OnTriggerStay2D(Collider2D collision)
+    {
+        string collisionTag = collision.gameObject.tag;
+        if (collisionTag == "SoftLeft")
+        {
+            ShipCam MoveCam = Camera.main.GetComponent<ShipCam>();
+            if (MoveCam)
+            {
+                MoveCam.Move(ShipCam.MoveDirection.left);
+            }
+        }
+        else if (collisionTag == "SoftRight")
+        {
+            ShipCam MoveCam = Camera.main.GetComponent<ShipCam>();
+            if (MoveCam)
+            {
+                MoveCam.Move(ShipCam.MoveDirection.right);
+            }
+        }
+        else if (collisionTag == "SoftTop")
+        {
+            ShipCam MoveCam = Camera.main.GetComponent<ShipCam>();
+            if (MoveCam)
+            {
+                MoveCam.Move(ShipCam.MoveDirection.top);
+            }
+        }
+        else if (collisionTag == "SoftBottom")
+        {
+            ShipCam MoveCam = Camera.main.GetComponent<ShipCam>();
+            if (MoveCam)
+            {
+                MoveCam.Move(ShipCam.MoveDirection.bottom);
+            }
+        }
+    }
+
+    protected void OnTriggerEnter2D(Collider2D collision)
+    {
+        string collisionTag = collision.gameObject.tag;
+        if (collisionTag == "HardLeft" || collisionTag == "HardRight")
+        {
+            ShipCam MoveCam = Camera.main.GetComponent<ShipCam>();
+            if (MoveCam)
+            {
+                MoveCam.CameraMovingHardHorizontal = true;
+            }
+        }
+        else if (collisionTag == "HardTop" || collisionTag == "HardBottom")
+        {
+            ShipCam MoveCam = Camera.main.GetComponent<ShipCam>();
+            if (MoveCam)
+            {
+                MoveCam.CameraMovingHardVertical = true;
+            }
+        }
+    }
+
+    protected void OnTriggerExit2D(Collider2D collision)
+    {
+        string collisionTag = collision.gameObject.tag;
+        if (collisionTag == "HardLeft" || collisionTag == "HardRight")
+        {
+            ShipCam MoveCam = Camera.main.GetComponent<ShipCam>();
+            if (MoveCam)
+            {
+                MoveCam.CameraMovingHardHorizontal = false;
+            }
+        }
+        else if (collisionTag == "HardTop" || collisionTag == "HardBottom")
+        {
+            ShipCam MoveCam = Camera.main.GetComponent<ShipCam>();
+            if (MoveCam)
+            {
+                MoveCam.CameraMovingHardVertical = false;
+            }
+        }
+    }
 }

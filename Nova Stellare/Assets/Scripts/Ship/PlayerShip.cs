@@ -155,6 +155,8 @@ public class PlayerShip : MonoBehaviour
     private float AccelerationFactor = 10;
     [SerializeField]
     private float DeaccelerationRate = 5;
+    [SerializeField]
+    private float TopSpeedFactor = 1;
     private int BaseSpeed = 0;
     private int BaseAcceleration= 0;
     private int BaseThrustRight = 0;
@@ -166,6 +168,38 @@ public class PlayerShip : MonoBehaviour
     private float CurrentAccelerationHorizontal = 0;
     private float CurrentSpeedVertical = 0;
     private float CurrentAccelerationVertical = 0;
+    public Vector3 GetCurrentVelocity
+    {
+        get
+        {
+            return new Vector3(CurrentSpeedHorizontal, CurrentSpeedVertical, 0);
+        }
+    }
+    public Vector3 GetCurrentAcceleration
+    {
+        get
+        {
+            return new Vector3(CurrentAccelerationHorizontal, CurrentAccelerationVertical, 0);
+        }
+    }
+    [SerializeField]
+    private bool InstantlyChangeDirection = false;
+    public bool ChangeDirectionInstantly
+    {
+        get
+        {
+            return InstantlyChangeDirection;
+        }
+    }
+    [SerializeField]
+    private bool InstantlyGetTopSpeed = false;
+    public bool ShipInstantSpeed
+    {
+        get
+        {
+            return InstantlyGetTopSpeed;
+        }
+    }
 
     // Start is called before the first frame update
     public void Start()
@@ -260,7 +294,18 @@ public class PlayerShip : MonoBehaviour
         if (DirectionRatio.x > 0) // Right
         {
             //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Right");
-            if (CurrentSpeedHorizontal <= Mathf.Abs(BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) /(BaseAccelReduction + 1)))
+            if (InstantlyChangeDirection)
+            {
+                if (CurrentSpeedHorizontal < 0)
+                {
+                    CurrentSpeedHorizontal = 0;
+                }
+            }
+            if (ShipInstantSpeed)
+            {
+                CurrentSpeedHorizontal = TopSpeedFactor * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) * DirectionRatio.x / (BaseAccelReduction + 1);
+            }
+            else if (CurrentSpeedHorizontal <= Mathf.Abs(TopSpeedFactor * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) /(BaseAccelReduction + 1)))
                 CurrentAccelerationHorizontal = DirectionRatio.x * Time.fixedDeltaTime * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
             else
                 CurrentAccelerationHorizontal = 0;
@@ -268,14 +313,29 @@ public class PlayerShip : MonoBehaviour
         else if (DirectionRatio.x < 0) // Left
         {
             //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Left");
-            if (CurrentSpeedHorizontal <= Mathf.Abs(BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
+            if (InstantlyChangeDirection)
+            {
+                if (CurrentSpeedHorizontal > 0)
+                {
+                    CurrentSpeedHorizontal = 0;
+                }
+            }
+            if (ShipInstantSpeed)
+            {
+                CurrentSpeedHorizontal = TopSpeedFactor * BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) * DirectionRatio.x / (BaseAccelReduction + 1);
+            }
+            else if (CurrentSpeedHorizontal <= Mathf.Abs(TopSpeedFactor * BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
                 CurrentAccelerationHorizontal = DirectionRatio.x * Time.fixedDeltaTime * BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
             else
                 CurrentAccelerationHorizontal = 0;
         }
         else
         {
-            if (Mathf.Abs(CurrentAccelerationHorizontal) > 0)
+            if (InstantlyChangeDirection)
+            {
+                CurrentSpeedHorizontal = 0;
+            }
+            else if (Mathf.Abs(CurrentAccelerationHorizontal) > 0)
                 CurrentAccelerationHorizontal = -DeaccelerationRate * Time.fixedDeltaTime * CurrentSpeedHorizontal * (BaseAcceleration + 1) / (BaseAccelReduction + 1);
             else
                 CurrentAccelerationHorizontal = 0;
@@ -284,7 +344,18 @@ public class PlayerShip : MonoBehaviour
         if (DirectionRatio.y > 0) // Up
         {
             //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Up");
-            if (CurrentSpeedVertical <= Mathf.Abs(BaseSpeed * (BaseThrustUp + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
+            if (InstantlyChangeDirection)
+            {
+                if (CurrentSpeedVertical < 0)
+                {
+                    CurrentSpeedVertical = 0;
+                }
+            }
+            if (ShipInstantSpeed)
+            {
+                CurrentSpeedVertical = TopSpeedFactor * BaseSpeed * (BaseThrustUp + BaseAcceleration + 1) * DirectionRatio.y / (BaseAccelReduction + 1);
+            }
+            else if (CurrentSpeedVertical <= Mathf.Abs(TopSpeedFactor * BaseSpeed * (BaseThrustUp + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
                 CurrentAccelerationVertical = DirectionRatio.y * Time.fixedDeltaTime * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
             else
                 CurrentAccelerationVertical = 0;
@@ -292,23 +363,50 @@ public class PlayerShip : MonoBehaviour
         else if (DirectionRatio.y < 0) // Down
         {
             //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Down");
-            if (CurrentSpeedVertical <= Mathf.Abs(BaseSpeed * (BaseThrustDown + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
+            if (InstantlyChangeDirection)
+            {
+                if (CurrentSpeedVertical > 0)
+                {
+                    CurrentSpeedVertical = 0;
+                }
+            }
+            if (ShipInstantSpeed)
+            {
+                CurrentSpeedVertical = TopSpeedFactor * BaseSpeed * (BaseThrustDown + BaseAcceleration + 1) * DirectionRatio.y / (BaseAccelReduction + 1);
+            }
+            else if (CurrentSpeedVertical <= Mathf.Abs(TopSpeedFactor * BaseSpeed * (BaseThrustDown + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
                 CurrentAccelerationVertical = DirectionRatio.y * Time.fixedDeltaTime * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
             else
                 CurrentAccelerationVertical = 0;
         }
         else
         {
-            if (Mathf.Abs(CurrentAccelerationVertical) > 0)
+            if (InstantlyChangeDirection)
+            {
+                CurrentSpeedVertical = 0;
+            }
+            else if (Mathf.Abs(CurrentAccelerationVertical) > 0)
                 CurrentAccelerationVertical = -DeaccelerationRate * Time.fixedDeltaTime * CurrentSpeedVertical * (BaseAcceleration + 1) / (BaseAccelReduction + 1);
             else
                 CurrentAccelerationVertical = 0;
         }
-        FindObjectOfType<InBuildDebugger>().SendDebugMessege("Ratio: " + DirectionRatio);
+        //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Ratio: " + DirectionRatio);
 
         // Adjust Speed
         CurrentSpeedHorizontal += CurrentAccelerationHorizontal * Time.fixedDeltaTime;
+        // Make sure the ship is not speeding
+        if (CurrentSpeedHorizontal > TopSpeedFactor * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) / (BaseAccelReduction + 1))
+            CurrentSpeedHorizontal = TopSpeedFactor * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) / (BaseAccelReduction + 1);
+        else if (CurrentSpeedHorizontal < -TopSpeedFactor * BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) / (BaseAccelReduction + 1))
+            CurrentSpeedHorizontal = -TopSpeedFactor * BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) / (BaseAccelReduction + 1);
+
         CurrentSpeedVertical += CurrentAccelerationVertical * Time.fixedDeltaTime;
+        // Make sure the ship is not speeding
+        if (CurrentSpeedVertical > TopSpeedFactor * BaseSpeed * (BaseThrustUp + BaseAcceleration + 1) / (BaseAccelReduction + 1))
+            CurrentSpeedVertical = TopSpeedFactor * BaseSpeed * (BaseThrustUp + BaseAcceleration + 1) / (BaseAccelReduction + 1);
+        else if (CurrentSpeedVertical < -TopSpeedFactor * BaseSpeed * (BaseThrustDown + BaseAcceleration + 1) / (BaseAccelReduction + 1))
+            CurrentSpeedVertical = -TopSpeedFactor * BaseSpeed * (BaseThrustDown + BaseAcceleration + 1) / (BaseAccelReduction + 1);
+
         Vector3 Speed = new Vector3(CurrentSpeedHorizontal, CurrentSpeedVertical, 0);
 
         // Apply Speeds

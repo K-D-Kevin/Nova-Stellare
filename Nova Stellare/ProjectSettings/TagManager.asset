@@ -5,6 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - LeftJoystick
+  - SoftLeft
+  - SoftRight
+  - SoftTop
+  - SoftBottom
+  - HardLeft
+  - HardRight
+  - HardTop
+  - HardBottom
   layers:
   - Default
   - TransparentFX
