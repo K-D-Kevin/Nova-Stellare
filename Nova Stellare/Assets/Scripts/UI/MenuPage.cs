@@ -164,7 +164,7 @@ public class MenuPage : MonoBehaviour
 
     public void AdjustTitle(string title)
     {
-        TitleTextDisplay.SetDisplay(title, 30, new Vector2(60, 10));
+        TitleTextDisplay.SetDisplay(title, 10, new Vector2(60, 10));
         TitleTextDisplay.UpdateTextDisplay();
     }
 }
