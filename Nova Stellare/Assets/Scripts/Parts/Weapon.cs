@@ -63,6 +63,15 @@ public class Weapon : ShipParts
 
     [SerializeField]
     private ShipAttacks WeaponAttackPrefab;
+    private Transform AttackTransform;
+
+    private void OnEnable()
+    {
+        if (!AttackTransform)
+        {
+            AttackTransform = GameObject.Find("ShipAttacks").transform;
+        }
+    }
 
     // Launch Attack
     public void Fire()
@@ -70,7 +79,7 @@ public class Weapon : ShipParts
         if (!Reloading)
         {
             ShipAttacks Temp = Instantiate(WeaponAttackPrefab, ProjectileSpawn);
-            Temp.transform.parent = null;
+            Temp.transform.parent = AttackTransform;
             Reloading = true;
             StartCoroutine("IE_Fire");
         }

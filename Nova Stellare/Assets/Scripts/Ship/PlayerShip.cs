@@ -112,6 +112,8 @@ public class PlayerShip : MonoBehaviour
     }
     // Ship transform
     private Transform Mytransform;
+    // Ship Attacks Transform
+    private Transform WeaponFire;
 
     // Touch detection and control detection
     [SerializeField]
@@ -168,6 +170,24 @@ public class PlayerShip : MonoBehaviour
     private float CurrentAccelerationHorizontal = 0;
     private float CurrentSpeedVertical = 0;
     private float CurrentAccelerationVertical = 0;
+    private float MaxSpeedRight = 0;
+    private float MaxSpeedLeft = 0;
+    private float MaxSpeedTop = 0;
+    private float MaxSpeedBottom = 0;
+    // Whether the device is in landscape or potrait mode;
+    private float OrientationSpeedMultiplier = 1;
+    public float DeviceOrientationSpeedMultiplier
+    {
+        get
+        {
+            return OrientationSpeedMultiplier;
+        }
+        set
+        {
+            OrientationSpeedMultiplier = value;
+            UpdateSpeedLimits();
+        }
+    }
     public Vector3 GetCurrentVelocity
     {
         get
@@ -211,7 +231,13 @@ public class PlayerShip : MonoBehaviour
 
         // Set Find Joystick Elements
         SceneEventSystem = FindObjectOfType<EventSystem>();
-    }
+
+        // Set Limits
+        MaxSpeedRight = OrientationSpeedMultiplier * TopSpeedFactor * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) / (BaseAccelReduction + 1);
+        MaxSpeedLeft = OrientationSpeedMultiplier * TopSpeedFactor * BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) / (BaseAccelReduction + 1);
+        MaxSpeedTop = OrientationSpeedMultiplier * TopSpeedFactor * BaseSpeed * (BaseThrustUp + BaseAcceleration + 1) / (BaseAccelReduction + 1);
+        MaxSpeedBottom = OrientationSpeedMultiplier * TopSpeedFactor * BaseSpeed * (BaseThrustDown + BaseAcceleration + 1) / (BaseAccelReduction + 1);
+}
 
     // Update is called once per frame
     void FixedUpdate()
@@ -305,7 +331,7 @@ public class PlayerShip : MonoBehaviour
             {
                 CurrentSpeedHorizontal = TopSpeedFactor * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) * DirectionRatio.x / (BaseAccelReduction + 1);
             }
-            else if (CurrentSpeedHorizontal <= Mathf.Abs(TopSpeedFactor * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) /(BaseAccelReduction + 1)))
+            else if (CurrentSpeedHorizontal <= MaxSpeedRight)
                 CurrentAccelerationHorizontal = DirectionRatio.x * Time.fixedDeltaTime * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
             else
                 CurrentAccelerationHorizontal = 0;
@@ -324,7 +350,7 @@ public class PlayerShip : MonoBehaviour
             {
                 CurrentSpeedHorizontal = TopSpeedFactor * BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) * DirectionRatio.x / (BaseAccelReduction + 1);
             }
-            else if (CurrentSpeedHorizontal <= Mathf.Abs(TopSpeedFactor * BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
+            else if (CurrentSpeedHorizontal <= MaxSpeedLeft)
                 CurrentAccelerationHorizontal = DirectionRatio.x * Time.fixedDeltaTime * BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
             else
                 CurrentAccelerationHorizontal = 0;
@@ -355,7 +381,7 @@ public class PlayerShip : MonoBehaviour
             {
                 CurrentSpeedVertical = TopSpeedFactor * BaseSpeed * (BaseThrustUp + BaseAcceleration + 1) * DirectionRatio.y / (BaseAccelReduction + 1);
             }
-            else if (CurrentSpeedVertical <= Mathf.Abs(TopSpeedFactor * BaseSpeed * (BaseThrustUp + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
+            else if (CurrentSpeedVertical <= MaxSpeedTop)
                 CurrentAccelerationVertical = DirectionRatio.y * Time.fixedDeltaTime * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
             else
                 CurrentAccelerationVertical = 0;
@@ -374,7 +400,7 @@ public class PlayerShip : MonoBehaviour
             {
                 CurrentSpeedVertical = TopSpeedFactor * BaseSpeed * (BaseThrustDown + BaseAcceleration + 1) * DirectionRatio.y / (BaseAccelReduction + 1);
             }
-            else if (CurrentSpeedVertical <= Mathf.Abs(TopSpeedFactor * BaseSpeed * (BaseThrustDown + BaseAcceleration + 1) / (BaseAccelReduction + 1)))
+            else if (CurrentSpeedVertical <= MaxSpeedBottom)
                 CurrentAccelerationVertical = DirectionRatio.y * Time.fixedDeltaTime * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) * AccelerationFactor / (BaseAccelReduction + 1);
             else
                 CurrentAccelerationVertical = 0;
@@ -412,6 +438,14 @@ public class PlayerShip : MonoBehaviour
         // Apply Speeds
         //FindObjectOfType<InBuildDebugger>().SendDebugMessege("Velocity: " + Speed);
         Mytransform.position += Speed;
+    }
+
+    private void UpdateSpeedLimits()
+    {
+        MaxSpeedRight = OrientationSpeedMultiplier * TopSpeedFactor * BaseSpeed * (BaseThrustRight + BaseAcceleration + 1) / (BaseAccelReduction + 1);
+        MaxSpeedLeft = OrientationSpeedMultiplier * TopSpeedFactor * BaseSpeed * (BaseThrustLeft + BaseAcceleration + 1) / (BaseAccelReduction + 1);
+        MaxSpeedTop = OrientationSpeedMultiplier * TopSpeedFactor * BaseSpeed * (BaseThrustUp + BaseAcceleration + 1) / (BaseAccelReduction + 1);
+        MaxSpeedBottom = OrientationSpeedMultiplier * TopSpeedFactor * BaseSpeed * (BaseThrustDown + BaseAcceleration + 1) / (BaseAccelReduction + 1);
     }
 
     // Weapons

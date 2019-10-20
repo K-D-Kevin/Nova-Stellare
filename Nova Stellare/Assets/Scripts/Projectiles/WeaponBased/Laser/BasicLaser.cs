@@ -31,7 +31,8 @@ public class BasicLaser : LasersAttacks
             CurrentSpeed = BaseSpeed + Acceleration * CurrentTime;
         }
 
-        MyT.Translate(MyT.right * CurrentSpeed);
+        MyT.position += MyT.right * CurrentSpeed;
+        //MyT.Translate(MyT.right * CurrentSpeed);
     }
 
     // Collisions

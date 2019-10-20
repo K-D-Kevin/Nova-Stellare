@@ -15,6 +15,30 @@ public class SceneManagement : MonoBehaviour
         Application.Quit();
     }
 
+    private void OnEnable()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0 || SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft; 
+
+            Screen.autorotateToLandscapeLeft = true;
+            Screen.autorotateToLandscapeRight = true;
+            Screen.autorotateToPortrait = false;
+            Screen.autorotateToPortraitUpsideDown = false;
+            Screen.orientation = ScreenOrientation.AutoRotation;
+        }
+        else
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+
+            Screen.autorotateToLandscapeLeft = true;
+            Screen.autorotateToLandscapeRight = true;
+            Screen.autorotateToPortrait = true;
+            Screen.autorotateToPortraitUpsideDown = true;
+            Screen.orientation = ScreenOrientation.AutoRotation;
+        }
+    }
+
     // When the game closes - save settings / game / etc
     public void OnApplicationQuit()
     {
